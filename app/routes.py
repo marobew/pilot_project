@@ -56,10 +56,10 @@ def register():
     return render_template("register.html", title="Register", form=form)
 
 
-@app.route("/mypage/<id>", methods=["GET", "POST"])
-def mypage(id):
+@app.route("/mypage", methods=["GET", "POST"])
+def mypage():
     if current_user.is_authenticated:
-        user = User.query.get(id)
+        user = current_user
         return render_template("mypage.html", user=user)
     return render_template("index.html")
 
@@ -100,15 +100,6 @@ def edit(id):
         db.session.commit()
         return redirect(url_for("index"))
     return render_template("edit.html", post=post, form=form)
-
-
-# post like
-# def post_like(request):
-#     pk = request.POST.get('pk', None)
-#     post =
-
-#     if not post_like_created:
-#         post_like
 
 
 """  /POST """
