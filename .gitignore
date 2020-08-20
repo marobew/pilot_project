@@ -1,0 +1,6 @@
+env/
+.vscode/*
+__pycache__
+secrets.json
+.DS_Store
+secrets.json

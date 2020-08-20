@@ -1,0 +1,43 @@
+<script type="text/javascript">
+    (function () {
+        const delegation = document.querySelector("")
+
+        function delegationFunc(e) {
+            let elem = e.target();
+            // console.log(elem);
+
+            while (!elem.getAttribute('data-name')) {
+                elem = elem.parentNode;
+
+                if (elem.nodeName === 'BODY') {
+                    elem.null;
+                    return;
+                }
+            }
+            if (elem.matches('[data-name="post_likes"]')) {
+                //console.log('좋아요된다된다된다');
+                const pk = elem.getAttrbute('name');
+                // console.log(pk); // 카운트
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ url_for('index') }}", // 주소 나중에
+                    data: {
+                        'pk': pk,
+                        'csrfmiddlewaretoken': '{{csrf_token}}'
+                    },
+                    dataType: "json",
+                    success: function (response) {
+                        // alert("된다된다");
+                        const likeCount = document.querySelector('#like-count-' + pk);
+                        likeCount.innerHTML = response.like_count;
+                    },
+                    error: function (request, status, error) {
+                        alert("code:" + request.status + "\n" + "message: " + request.responseText +
+                            "\n" + "error: " + error);
+                    }
+                });
+            }
+        }
+    })();
+</script>
