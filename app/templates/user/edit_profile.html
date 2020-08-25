@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main id="id">
+    <section class="section pb-5">
+        <div class="container">
+            <div class="row mb-5 align-item-end">
+                <div class="col-md-6" data-aos="fade-up">
+                    <h2>내 정보 수정하기</h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <form method="post" role="form">
+                    {{ form.hidden_tag() }}
+                    <div class="col-md-12 form-group">
+                        <label for="password">현재 비밀번호</label>
+                        {{ form.password(size=32, type="password", class="form-control") }}
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <label for="password">새로운 비밀번호</label>
+                        {% for error in form.new_password2.errors %}
+                        <span style="color: rgb(230, 118, 118)">&nbsp;{{ error }}</span>
+                        {% endfor %}
+                        {{ form.password(size=32, type="password", class="form-control") }}
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <label for="password">비밀번호 확인</label>
+                        {% for error in form.new_password.errors %}
+                        <span style="color: rgb(230, 118, 118);">&nbsp;{{ error }}</span>
+                        {% endfor %}
+                        {{ form.new_password2(size=32, type="password", class="form-control") }}
+                    </div>
+                    <div class="col-md-6 form-group">
+                        {{ form.submit(class="readmore d-block w-100") }}
+                        <!-- <input type="submit" class="readmore d-block w-100" value="Send Message"> -->
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </section>
+</main>
+
+
+{% endblock %}

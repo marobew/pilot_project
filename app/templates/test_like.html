@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+
+<body>
+    <section id="container">
+        <div id="wrapper">
+            <div class="inner">
+                <section id="contents_container">
+                    <article class="create_box">
+                        <h2 class="title">게시물 만들기</h2>
+                        <div class="text_field">
+
+                            <form action="">
+
+                                <div class="top">
+                                    <div class="profile_img"><img src="imgs/profile/tiger.png" alt=""></div>
+                                </div>
+                                <div class="middle">
+                                    <canvas id="imageCanvas" width="0" height="0"></canvas>
+                                </div>
+                                <div class="bottom">
+                                    <input type="file" name="photo" id="id_photo" required="required">
+
+                                    <div class="import-btn">
+                                        <label for="id_photo" id="photo_label"><span
+                                                class="icon icon--picture"></span>사진/동영상</label>
+                                    </div>
+                                </div>
+                                <div class="submit">
+                                    <input type="submit" id="submitBtn" value="게시" disabled>
+                                </div>
+
+                            </form>
+                        </div>
+                    </article>
+
+                    <article class="contents">
+                        <div class="img_section">
+                            <a href="#"><img src="imgs/thumb/thumb03.jpg" alt=""></a>
+                        </div>
+
+                        <div class="ajax_field">
+                            <div class="like">좋아요 <span class="like_count"></span>개</div>
+                        </div>
+
+                        <div class="btn_container">
+                            <div class="like-btn" data-name="like"><span class="icon icon--like-line"></span>좋아요</div>
+                            <div class="comment-btn"><span class="icon icon--comment-line"></span>댓글</div>
+                        </div>
+            </div>
+            <input type="hidden" id="page" value="0">
+    </section>
+    </div>
+    </div>
+    </section>
+    {% include 'like_ajax.html' %}
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="{{ url_for('static', filename='js/like_main.js') }}"></script>
+</body>
+
+</html>

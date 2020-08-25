@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+
+<main id="main">
+
+    <section class="section pb-5">
+        <div class="container">
+
+            <div class="row mb-5 align-items-end">
+                <div class="col-md-6" data-aos="fade-up">
+                    <h2>회원가입</h2>
+                    <p class="mb-0">로그인이 필요한 서비스입니다.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-5 mb-md-0" data-aos="fade-up">
+
+                    <form method="post" role="form">
+                        {{ form.hidden_tag() }}
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label for="name">이름</label>
+                                {% for error in form.username.errors %}
+                                <span style="color: rgb(230, 118, 118);">&nbsp;{{ error }}</span>
+                                {% endfor %}
+                                {{ form.username(size=32, class="form-control") }}
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label for="email">이메일</label>
+                                {% for error in form.email.errors %}
+                                <span style="color: rgb(230, 118, 118);">&nbsp;{{ error }}</span>
+                                {% endfor %}
+                                {{ form.email(size=64, class="form-control") }}
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label for="password">비밀번호</label>
+                                {% for error in form.password2.errors %}
+                                <span style="color: rgb(230, 118, 118)">&nbsp;{{ error }}</span>
+                                {% endfor %}
+                                {{ form.password(size=32, type="password", class="form-control") }}
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label for="password">비밀번호 확인</label>
+                                {% for error in form.password.errors %}
+                                <span style="color: rgb(230, 118, 118);">&nbsp;{{ error }}</span>
+                                {% endfor %}
+                                {{ form.password2(size=32, type="password", class="form-control") }}
+                            </div>
+                            <div class="col-md-6 form-group">
+                                {{ form.submit(class="readmore d-block w-100") }}
+                                <!-- <input type="submit" class="readmore d-block w-100" value="Send Message"> -->
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+{% endblock %}

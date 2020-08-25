@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main id="main">
+
+    <section class="section pb-5">
+        <div class="container">
+
+            <div class="row mb-5 align-items-end">
+                <div class="col-md-6" data-aos="fade-up">
+                    <h2>글 작성하기</h2>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-5 mb-md-0" data-aos="fade-up">
+
+                    <form method="post" role="form" class="php-email-form">
+
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label for="name">받는이</label>
+                                {{ form.receiver(class="form-control")}}
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <div> </div>
+                                {{ form.anonymous }} {{ form.anonymous.label }}
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label for="name">제목</label>
+                                {{ form.title(class="form-control", cols="30", rows="30", type="textarea", data_rule="required") }}
+
+                                <label for="name">내용</label>
+                                {{ form.content(class="form-control", cols="30", rows="30", type="textarea", data_rule="required") }}
+                            </div>
+                            <div class="col-md-6 form-group">
+                                {{ form.submit(class="readmore d-block w-100", value="작성하기") }}
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main><!-- End #main -->
+{% endblock %}

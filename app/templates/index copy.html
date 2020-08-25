@@ -58,14 +58,16 @@
                     </div>
                 </div>
                 <!-- //랭킹 -->
+                {% for post in posts.items %}
                 <div class="rgyPostIt col-sm-6 col-md-4 col-lg-3 mb-2">
                     <a href="">
-                        <p>From. 위보람</p>
-                        <p>일이삼사오육칠팔구십</p>
+                        <p>To. {{ post.receiver }}</p>
+                        <p>{{ post.content }}}</p>
+                        <p>From. {{ post.author.username }}</p>
+                        <p style="text-align: right;">{{ post.posted_at }}</p>
                     </a>
                 </div>
-
-                {% include 'like_ajax.html'  %}
+                {% endfor %}
             </div>
         </div>
     </section><!-- End  Works Section -->

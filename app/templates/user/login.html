@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+
+<main id="main">
+
+  <section class="section pb-5">
+    <div class="container">
+
+      <div class="row mb-5 align-items-end">
+        <div class="col-md-6" data-aos="fade-up">
+          <h2>로그인</h2>
+          <p class="mb-0">로그인이 필요한 서비스입니다.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-5 mb-md-0" data-aos="fade-up">
+
+          <form method="post" role="form">
+            {{ form.hidden_tag() }}
+            <div class="row">
+              <div class="col-md-12 form-group">
+                <label for="name">이름</label>
+                {{ form.username(size=32, class="form-control") }}
+                <!-- <input type="text" name="name" class="form-control" id="name" data-rule="minlen:4"
+                  data-msg="Please enter at least 4 chars" />
+                <div class="validate"></div> -->
+              </div>
+              <div class="col-md-12 form-group">
+                <label for="name">비밀번호</label>
+                {{ form.password(size=32, type="password", class="form-control") }}
+                <!-- <input type="password" class="form-control" name="password" id="password" data-rule="password"
+                  data-msg="Please enter a valid password" />
+                <div class="validate"></div> -->
+                <p class="mt-2">{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+              </div>
+              <div class="col-md-6 form-group">
+                {{ form.submit(class="readmore d-block w-100") }}
+                <!-- <input type="submit" class="readmore d-block w-100" value="Send Message"> -->
+              </div>
+            </div>
+          </form>
+          <p>처음이신가요? <a href="{{ url_for('register') }}">회원가입을 하시려면 이곳을 누르세요. </a></p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main><!-- End #main -->
+
+{% endblock %}

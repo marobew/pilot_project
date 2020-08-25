@@ -11,11 +11,19 @@ def load_user(id):
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), index=True, unique=True)
+    username = db.Column(db.String(10), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    latest_login = db.Column(db.DateTime, default=datetime.now)
+    point = db.Column(db.Integer, default=0, nullable=True)
+    level = db.Column(db.Integer, default=1, nullable=True)
     posts = db.relationship("Post", backref="author", lazy="dynamic")
-    # likes = db.relationship("Like", backref="like", lazy="dynamic")
+    likes = db.relationship("Like", backref="like", lazy="dynamic")
+
+    def __init_(self, point, level):
+        self.point = 0
+        self.level = 1
 
     def __repr__(self):
         return "<User {}>".format(self.username)
@@ -29,24 +37,26 @@ class User(UserMixin, db.Model):
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(10))
     content = db.Column(db.String(280))
     posted_at = db.Column(db.DateTime, index=True, default=datetime.now)
-    updated_at = db.Column(db.DateTime, index=True, default=datetime.now, nullable=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id", ondelete="CASCADE"))
-    # likes = db.relationship(
-    #     "Like", secondary=post_like, backref="user_like", lazy="dynamic"
+    updated_at = db.Column(db.DateTime, index=True, default=datetime.now)
+    receiver = db.Column(db.String(64))
+    anonymous = db.Column(db.Boolean, default=False)
+    sender = db.Column(db.Integer, db.ForeignKey("user.id", ondelete="CASCADE"))
+    likes = db.relationship("Like", backref="user_like", lazy="dynamic")
 
     def __repr__(self):
         return "<Post {}>".format(self.content)
 
+    def updated_at(self):
+        self.updated_at = datetime.now()
+        db.session.add(self)
+        db.session.commit(self)
+
 
 class Like(db.Model):
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), primary_key=True)
-    post_id = db.Column(db.Integer, db.ForeignKey("post.id"), primary_key=True)
-
-
-# Like = db.Table(
-#     "post_like",
-#     db.Column(db.Integer, db.ForeignKey("user.id"), primary_key=True),
-#     db.Column(db.Integer, db.ForeignKey("post.id"), primary_key=True)
-# )
+    user = db.Column(db.Integer, db.ForeignKey("user.id"), primary_key=True)
+    post = db.Column(db.Integer, db.ForeignKey("post.id"), primary_key=True)
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    updated_at = db.Column(db.DateTime, default=datetime.now)

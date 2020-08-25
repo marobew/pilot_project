@@ -1,6 +1,8 @@
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     (function () {
-        const delegation = document.querySelector("")
+
+        const delegation = document.querySelector("#contents_container")
+        const textField = document.querySelector('#text_field');
 
         function delegationFunc(e) {
             let elem = e.target();
@@ -14,10 +16,11 @@
                     return;
                 }
             }
-            if (elem.matches('[data-name="post_likes"]')) {
-                //console.log('좋아요된다된다된다');
-                const pk = elem.getAttrbute('name');
-                // console.log(pk); // 카운트
+            if (elem.matches('[data-name="heartbeat"]')) {
+                console.log('하트');
+
+                const pk = elem.getAttribute('name');
+                console.log(pk);
 
                 $.ajax({
                     type: "POST",
@@ -28,7 +31,6 @@
                     },
                     dataType: "json",
                     success: function (response) {
-                        // alert("된다된다");
                         const likeCount = document.querySelector('#like-count-' + pk);
                         likeCount.innerHTML = response.like_count;
                     },
@@ -40,4 +42,4 @@
             }
         }
     })();
-</script>
+</script> -->

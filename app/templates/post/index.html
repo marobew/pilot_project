@@ -1,0 +1,136 @@
+{%extends "base.html" %}
+
+{% block content%}
+
+<main id="main">
+
+    <!-- ======= Works Section ======= -->
+    <section class="section site-portfolio">
+        <div class="container">
+            <div class="row mb-5 align-items-center">
+                <!-- 상단 -->
+                <div class="col-md-12 col-lg-5 mb-3 mb-lg-0" data-aos="fade-up">
+                    <h2>안녕하세요, {{current_user.username}} 님!😀</h2>
+                </div>
+                <!-- // 상단 -->
+
+                <!-- 글쓰기 -->
+                <div class="col-md-12 col-lg-7 text-right text-lg-right" data-aos="fade-up" data-aos-delay="100">
+                    <div class="filters">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('logout') }}">로그아웃</a>
+                        <a href="{{ url_for('mypage') }}">마이페이지</a>
+                        <a href="{{ url_for('add') }}" class="active">글쓰기</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- //글쓰기 -->
+            </div>
+
+            <div class="post-box row">
+                <!-- 랭킹 -->
+                <div class="col-md-4">
+                    <h4 class="inline mb-2 post-title">내 정보</h4>
+                    <div class="card profile mb-4">
+                        {% if current_user.is_authenticated %}
+                        <h4 class="h4 mb-4">이름 | {{current_user.username}}</h4>
+                        <h4 class="h4 mb-4">이메일 | {{current_user.email}}</h4>
+                        <h4 class="h4 mb-4">level | {{current_user.level}} (씨앗)</h4>
+                        <h4 class="h4 mb-4">point | {{current_user.point}}점 (다음 레벨까지
+                            {{100 - current_user.point % 100}}점)
+                        </h4>
+
+                        <div class="progress custom-progress">
+                            {% if current_user.point >= 100 %}
+                            <div class="progress-bar" role="progressbar" style="width: {{current_user.point - 100}}%"
+                                aria-valuenow="{{current_user.point - 100}}" aria-valuemin="0" aria-valuemax="100">
+                            </div>
+                            {% else %}
+                            <div class="progress-bar" role="progressbar" style="width: {{current_user.point}}%"
+                                aria-valuenow="{{current_user.point}}" aria-valuemin="0" aria-valuemax="100"></div>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <h4 class="inline mb-2 post-title">랭킹</h4>
+                    <div class="card profile">
+                        <div class="col">
+                            <h4 class="h4 mb-3">1등 | ooo</h4>
+                            <div class="progress custom-progress inline-block mb-3">
+                                <div class="progress-bar" role="progressbar" style="width: 30%" aria-valuenow="30"
+                                    aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <h4 class="h4 mb-3">2등 | ooo</h4>
+                            <div class="progress custom-progress inline-block mb-3">
+                                <div class="progress-bar" role="progressbar" style="width: 30%" aria-valuenow="30"
+                                    aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <h4 class="h4 mb-3">3등 | ooo</h4>
+                            <div class="progress custom-progress inline-block mb-3">
+                                <div class="progress-bar" role="progressbar" style="width: 30%" aria-valuenow="30"
+                                    aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- //랭킹 -->
+                {% for post in posts.items %}
+                <div class="rgyPostIt col-sm-6 col-md-4 col-lg-4 mb-2">
+                    <a href="">
+                        <p>To. {{ post.receiver }}</p>
+                        <p>{{ post.content }}</p>
+                        <p>From. {{ post.author.username }}</p>
+                        <p style="text-align: right;">{{ post.posted_at.strftime('%Y-%m-%d') }}</p>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- 페이징처리 시작 -->
+            <ul class="pagination justify-content-center mt-4">
+                <!-- 이전페이지 -->
+                {% if posts.has_prev %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ posts.prev_num }}">이전</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+                </li>
+                {% endif %}
+                {% for post in posts.iter_pages() %}
+                {% if post %}
+                {% if post != post.page %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ post }}">{{ post }}</a>
+                </li>
+                {% else %}
+                <li class="page-item active" aria-current="page">
+                    <a class="page-link" href="#">{{ post }}</a>
+                </li>
+                {% endif %}
+                {% else %}
+                <li class="disabled">
+                    <a class="page-link" href="#">...</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+                <!-- 다음페이지 -->
+                {% if posts.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ posts.next_num }}">다음</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+                </li>
+                {% endif %}
+            </ul>
+            <!-- 페이징처리 끝 -->
+        </div>
+    </section><!-- End  Works Section -->
+
+</main>
+
+{% endblock %}

@@ -5,25 +5,28 @@ from app.models import User, Post
 
 
 class PostForm(FlaskForm):
-    content = StringField("Text me", validators=[DataRequired()])
-    submit = SubmitField("Send")
+    receiver = StringField("받는분", validators=[DataRequired()])
+    title = StringField("제목", validators=[DataRequired()])
+    content = StringField("내용", validators=[DataRequired()])
+    anonymous = BooleanField("익명으로 작성하기")
+    submit = SubmitField("작성하기")
 
 
 class LoginForm(FlaskForm):
-    username = StringField("Username", validators=[DataRequired()])
-    password = PasswordField("Password", validators=[DataRequired()])
-    remember_me = BooleanField("Remember Me")
-    submit = SubmitField("Sign In")
+    username = StringField("이름", validators=[DataRequired()])
+    password = PasswordField("비밀번호", validators=[DataRequired()])
+    remember_me = BooleanField("로그인 상태 유지")
+    submit = SubmitField("로그인")
 
 
 class RegistrationForm(FlaskForm):
-    username = StringField("Username", validators=[DataRequired()])
-    email = StringField("Email", validators=[DataRequired(), Email()])
-    password = PasswordField("Password", validators=[DataRequired()])
+    username = StringField("이름", validators=[DataRequired()])
+    email = StringField("이메일", validators=[DataRequired(), Email()])
+    password = PasswordField("비밀번호", validators=[DataRequired()])
     password2 = PasswordField(
-        "Repeat Password", validators=[DataRequired(), EqualTo("password")]
+        "비밀번호 확인하기", validators=[DataRequired(), EqualTo("password")]
     )
-    submit = SubmitField("Register")
+    submit = SubmitField("회원가입")
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
@@ -34,3 +37,12 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
             raise ValidationError("이미 존재하는 계정입니다. ")
+
+
+class EditProfileForm(FlaskForm):
+    password = PasswordField("현재 비밀번호", validators=[DataRequired()])
+    new_password = PasswordField("새로운 비밀번호", validators=[DataRequired()])
+    new_password2 = PasswordField(
+        "비밀번호 확인하기", validators=[DataRequired(), EqualTo("new_password")]
+    )
+    submit = SubmitField("수정하기")
